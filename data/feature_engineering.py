@@ -21,7 +21,7 @@ y_train = pd.read_csv("/Users/arevashe/secondhand-clothing-sales/data/y_train_cl
 Initial Feature Engineering
 ======================================================
 """
-#brand processing
+#brand processing: for converting brands into tiers
 brand_df = X_train.copy()
 y_train = pd.to_numeric(y_train, errors="coerce")
 brand_df["y"] = y_train
@@ -334,6 +334,58 @@ def transform_seller_country(entry):
         return 7
     else:
         return 0
+
+def transform_product_condition(entry):
+    """
+    This function transforms the product_condition column to ordinal variables
+    Key for One Hot Encoding - condition_map = {
+                               "Never worn, with tag": 7,
+                               "Never worn": 6,
+                               "Very good condition": 5,
+                               "Good condition": 4,
+                               "Satisfactory condition": 3,
+                               "Fair condition": 2,
+                               "Poor condition": 1,
+                               }
+
+    """
+    if pd.isna(entry):
+        return 0
+
+    if "Poor condition" in entry:
+
+        return 1
+    if "Fair condition" in entry:
+
+        return 2
+    if "Satisfactory condition" in entry:
+
+        return 3
+    if "Good condition" in entry:
+
+        return 4
+    if "Very good condition" in entry:
+
+        return 5
+    if "Never worn" in entry:
+
+        return 6
+    if "Never worn, with tag" in entry:
+
+        return 7
+    else:
+        return 0
+
+
+
+# df["condition_score"] = df["product_condition"].map(condition_map)
+#
+# # Missing indicator
+# df["condition_missing"] = df["condition_score"].isna().astype(int)
+#
+# # Fill missing with 0
+# df["condition_score"] = df["condition_score"].fillna(0)
+
 """
 ======================================================
 Transforming Columns for X_train
@@ -369,21 +421,25 @@ print(f"seller_badge encoded count is: {X_train['cleaned_seller_badge'].value_co
 X_train["cleaned_seller_country"] = X_train["seller_country"].apply(transform_seller_country)
 print(f"seller_country encoded count is: {X_train['cleaned_seller_country'].value_counts().sum()}")
 
+X_train["cleaned_product_condition"] = X_train["product_condition"].apply(transform_product_condition)
+(f"product_condition encoded count is: {X_train['product_condition'].value_counts().sum()}")
+
 #drop categorical columns
-X_train = X_train.drop(columns=["product_type", "product_season", "product_material", "color_clean", "seller_badge", "seller_country"])
+X_train = X_train.drop(columns=["product_type", "product_season", "product_material", "color_clean", "seller_badge", "seller_country", "product_condition"])
 
 #one-hot encode categorical columns
 one_hot_cols = [
     "cleaned_product_type",
     "cleaned_product_season",
     "cleaned_product_material",
+    "cleaned_product_condition",
     "cleaned_color_clean",
     "cleaned_seller_country",
     "cleaned_seller_badge",
     "brand_tier",
 ]
 
-X_train = pd.get_dummies(X_train, columns=one_hot_cols, prefix=one_hot_cols).astype(int)
+X_train = pd.get_dummies(X_train, columns=one_hot_cols, prefix=one_hot_cols,  drop_first=True).astype(int)
 
 #write df to csv
 X_train.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean_encoded.csv", index=False)
@@ -423,17 +479,115 @@ print(f"seller_badge encoded count is: {X_test['cleaned_seller_badge'].value_cou
 X_test["cleaned_seller_country"] = X_test["seller_country"].apply(transform_seller_country)
 print(f"seller_country encoded count is: {X_test['cleaned_seller_country'].value_counts().sum()}")
 
+X_test["cleaned_product_condition"] = X_test["product_condition"].apply(transform_product_condition)
+(f"product_condition encoded count is: {X_test['product_condition'].value_counts().sum()}")
+
+
 #drop categorical columns
-X_test = X_test.drop(columns=["product_type", "product_season", "product_material", "color_clean", "seller_badge", "seller_country"])
+X_test = X_test.drop(columns=["product_type", "product_season", "product_material", "color_clean", "seller_badge", "seller_country", "product_condition"])
 
 #one-hot encode categorical columns
-X_test = pd.get_dummies(X_test, columns=one_hot_cols, prefix=one_hot_cols).astype(int)
+X_test = pd.get_dummies(X_test, columns=one_hot_cols, prefix=one_hot_cols, drop_first=True).astype(int)
 
 #align columns of X_test to X_train
 X_test = X_test.reindex(columns=X_train.columns, fill_value=0)
+
+
+"""
+======================================================
+Dropping Columns based on most recent VIF test
+======================================================
+"""
+
+###VERSION 2 results
+
+#Analysis:
+
+#removing cleaned_product_type_1, cleaned_product_season_2, cleaned_product_material_6, cleaned_product_condition_5, cleaned_product_condition_6, cleaned_color_clean_4 (>10)
+#                         columns  VIF values
+# 0            product_like_count    1.342643
+# 1     usually_ships_within_days    3.099087
+# 2          seller_products_sold    5.099565
+# 3    seller_num_products_listed    4.409493
+# 4          seller_num_followers    1.970550
+# 5              seller_pass_rate    9.033228
+# 6                 ships_missing    2.101386
+# 7        cleaned_product_type_1   11.396265
+# 8        cleaned_product_type_2    7.831167
+# 9        cleaned_product_type_3    5.937864
+# 10       cleaned_product_type_4    1.968336
+# 11       cleaned_product_type_5    9.509251
+# 12       cleaned_product_type_6    1.417397
+# 13     cleaned_product_season_2   11.442688
+# 14     cleaned_product_season_3    3.067936
+# 15   cleaned_product_material_2    4.150194
+# 16   cleaned_product_material_3    1.423131
+# 17   cleaned_product_material_4    2.509228
+# 18   cleaned_product_material_5    1.487115
+# 19   cleaned_product_material_6   10.276211
+# 20   cleaned_product_material_7    1.423098
+# 21   cleaned_product_material_8    1.928738
+# 22   cleaned_product_material_9    1.504274
+# 23  cleaned_product_material_10    1.044285
+# 24  cleaned_product_material_12    2.298893
+# 25  cleaned_product_material_13    2.732003
+# 26  cleaned_product_material_14    1.072011
+# 27  cleaned_product_material_15    1.085240
+# 28  cleaned_product_material_16    1.383733
+# 29  cleaned_product_material_17    1.056245
+# 30  cleaned_product_material_18    1.058022
+# 31  cleaned_product_material_19    1.008882
+# 32  cleaned_product_material_20    1.227778
+# 33  cleaned_product_material_21    1.019194
+# 34  cleaned_product_material_22    1.096739
+# 35  cleaned_product_material_23    1.000747
+# 36  cleaned_product_material_24    1.001282
+# 37  cleaned_product_material_25    1.019886
+# 38  cleaned_product_material_26    1.002180
+# 39  cleaned_product_material_27    1.279382
+# 40  cleaned_product_condition_4    5.470951
+# 41  cleaned_product_condition_5   27.673903
+# 42  cleaned_product_condition_6   20.445740
+# 43        cleaned_color_clean_2    6.251990
+# 44        cleaned_color_clean_3    8.381520
+# 45        cleaned_color_clean_4   12.267607
+# 46        cleaned_color_clean_5    8.069521
+# 47        cleaned_color_clean_6    2.781698
+# 48        cleaned_color_clean_7    3.644768
+# 49        cleaned_color_clean_8    4.812992
+# 50        cleaned_color_clean_9    3.252902
+# 51       cleaned_color_clean_10    3.869243
+# 52       cleaned_color_clean_11    1.776550
+# 53       cleaned_color_clean_12    1.688949
+# 54       cleaned_color_clean_13    1.866940
+# 55       cleaned_color_clean_14    1.290664
+# 56     cleaned_seller_country_2    1.165185
+# 57     cleaned_seller_country_3    1.223186
+# 58     cleaned_seller_country_4    1.000577
+# 59     cleaned_seller_country_5    1.000894
+# 60     cleaned_seller_country_6    1.026096
+# 61     cleaned_seller_country_7    1.000481
+# 62       cleaned_seller_badge_2    1.814590
+# 63       cleaned_seller_badge_3    2.360442
+# 64            brand_tier_Luxury    3.711203
+# 65        brand_tier_Mid-Market    2.754503
+# 66           brand_tier_Premium    5.468890
+# 67      brand_tier_Ultra-Luxury    1.940272
+
+
+
+vif_col_drop = ["cleaned_product_type_1", "cleaned_product_season_2", "cleaned_product_material_6", "cleaned_product_condition_5","cleaned_product_condition_6", "cleaned_color_clean_4"]
+
+X_train = X_train.drop(columns=vif_col_drop)
+X_test = X_test.drop(columns=vif_col_drop)
+
+"""
+======================================================
+Write df to csv
+======================================================
+"""
 
 #### NOTE: replace path with your correct local path
 #write df to csv
 X_train.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean_encoded.csv", index=False)
 X_test.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_test_clean_encoded.csv", index=False)
-
