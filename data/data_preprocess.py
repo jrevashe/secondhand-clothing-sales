@@ -82,11 +82,6 @@ def parse_ship_time(x):
 
 df["usually_ships_within_days"] = df["usually_ships_within"].apply(parse_ship_time)
 
-# # brand frequency-encoded, (Too many brands for one-hot, this is just the most simple solution I can think of, can be changed later)
-df["brand_popularity"] = df["brand_name"].map(
-    df["brand_name"].value_counts(normalize=True)
-)
-
 df.to_csv("/Users/arevashe/secondhand-clothing-sales/data/clean.csv")
 df.info()
 
@@ -101,7 +96,6 @@ numeric_features = [
     "seller_pass_rate",
     "condition_score",
     "condition_missing",
-    "brand_popularity",
 ]
 
 cats = [
@@ -122,6 +116,16 @@ y = np.log1p(df["seller_price"])
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=RANDOM_STATE
+)
+
+# # brand frequency-encoded, (Too many brands for one-hot, this is just the most simple solution I can think of, can be changed later)
+#calculated brand popularity after test/train split to avoid data leakage
+X_train["brand_popularity"] = X_train["brand_name"].map(
+    X_train["brand_name"].value_counts(normalize=True)
+)
+
+X_test["brand_popularity"] = X_test["brand_name"].map(
+    X_test["brand_name"].value_counts(normalize=True)
 )
 
 # remove outliers in price_usd for training set
