@@ -23,6 +23,7 @@ Initial Feature Engineering
 """
 #brand processing
 brand_df = X_train.copy()
+y_train = pd.to_numeric(y_train, errors="coerce")
 brand_df["y"] = y_train
 
 # Brand-level mean + count of log-price (train ONLY)
@@ -382,7 +383,7 @@ one_hot_cols = [
     "brand_tier",
 ]
 
-X_train = pd.get_dummies(X_train, columns=one_hot_cols, prefix=one_hot_cols)
+X_train = pd.get_dummies(X_train, columns=one_hot_cols, prefix=one_hot_cols).astype(int)
 
 #write df to csv
 X_train.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean_encoded.csv", index=False)
@@ -426,7 +427,7 @@ print(f"seller_country encoded count is: {X_test['cleaned_seller_country'].value
 X_test = X_test.drop(columns=["product_type", "product_season", "product_material", "color_clean", "seller_badge", "seller_country"])
 
 #one-hot encode categorical columns
-X_test = pd.get_dummies(X_test, columns=one_hot_cols, prefix=one_hot_cols)
+X_test = pd.get_dummies(X_test, columns=one_hot_cols, prefix=one_hot_cols).astype(int)
 
 #align columns of X_test to X_train
 X_test = X_test.reindex(columns=X_train.columns, fill_value=0)
