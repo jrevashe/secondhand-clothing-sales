@@ -13,6 +13,10 @@ df = df.dropna(subset=["seller_price"])
 # narrowed dataset down to women clothing only
 df = df[(df["product_gender_target"] != "Men") & (df["product_category"].str.contains("Clothing", case=False, na=False))]
 
+# product_gender_target will only have entries w/ "Women" and product_category will only have entries w/ "Women's clothing" so dropping these columns as they
+# will not contribute to the predictions
+df = df.drop(["product_gender_target", "product_category"], axis=1)
+
 # Map conditions to ordinal
 condition_map = {
     "Never worn, with tag": 7,
@@ -66,6 +70,7 @@ df["brand_popularity"] = df["brand_name"].map(
     df["brand_name"].value_counts(normalize=True)
 )
 
+df.to_csv("/Users/arevashe/secondhand-clothing-sales/data/clean.csv")
 df.info()
 
 target = "seller_price"
@@ -83,8 +88,6 @@ numeric_features = [
 ]
 
 cats = [
-    "product_gender_target",
-    "product_category",
     "product_type",
     "product_season",
     "product_material",
@@ -113,8 +116,8 @@ y_train_clean = y_train.loc[mask].copy()
 
 ###NOTE: replace path with your correct local one
 #saving cleaned training and test set locally for easy inspection
-X_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean.csv")
-y_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/y_train_clean.csv")
+X_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean.csv", index=False)
+y_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/y_train_clean.csv", index=False)
 
 # print(f"X_train_clean: {X_train_clean}")
 # print(f"y_train_clean: {y_train_clean}")
