@@ -19,13 +19,13 @@ def transform_product_type(entry):
     entry = entry.lower()
     #{1: outerwear, 2: bottoms, 3: top, 4: swimwear, 5: dress, 6: one-piece}
     #list specifc categories first so they are picked up first by the function
-    if "jacket" in entry or "jackets" in entry or "coat" in entry or "coats" in entry or "vest" in entry or "cardigan" in entry or "cardigans" in entry or "blazer" in entry or "blazers" in entry or "sweatshirt" in entry or "sweatshirts" in entry or "jumper" in entry or "jumpers" in entry or "knitwear" in entry or "puffer" in entry or "caban" in entry or "peacoat" in entry:
+    if "jacket" in entry or "coat" in entry or "vest" in entry or "cardigan" in entry  or "blazer" in entry or "sweatshirt" in entry  or "jumper" in entry  or "knitwear" in entry or "puffer" in entry or "caban" in entry or "peacoat" in entry:
         count += 1
         return 1
-    if "pant" in entry or "trousers" in entry or "pants" in entry or "trouser" in entry or "leggings" in entry or "legging" in entry or "jean" in entry or "jeans" in entry or "short" in entry or "shorts" in entry or "tight" in entry or "tights" in entry or "bermuda" in entry or "bermudas" in entry or "skirt" in entry or "skirts" in entry:
+    if "pant" in entry or "trouser" in entry or "legging" in entry or "jean" in entry or "short" in entry  or "tight" in entry or "bermuda" in entry or "skirt" in entry:
         count += 1
         return 2
-    if "top" in entry or "tops" in entry or "shirt" in entry or "shirts" in entry or "blouse" in entry or "corset" in entry or "corsets" in entry:
+    if "top" in entry or "shirt" in entry or "blouse" in entry or "corset" in entry:
         count += 1
         return 3
     if "swimsuit" in entry or "bikini" in entry:
@@ -34,7 +34,7 @@ def transform_product_type(entry):
     if "dress" in entry:
         count += 1
         return 5
-    if "jumpsuit" in entry or "jumpsuits" in entry or "romper" in entry or "rompers" in entry:
+    if "jumpsuit" in entry or "romper" in entry :
         count += 1
         return 6
 #     return count
