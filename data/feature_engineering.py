@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 Load Datasets
 ======================================================
 """
-
+#### NOTE: replace path with your correct local path
 #load X_train and X_test
 X_train = pd.read_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean.csv")
 X_test = pd.read_csv("/Users/arevashe/secondhand-clothing-sales/data/X_test_clean.csv")
@@ -345,5 +345,6 @@ print(f"seller_country encoded count is: {X_test["cleaned_seller_country"].value
 X_test = X_test.drop(columns=["product_type", "product_season", "product_material", "color_clean", "seller_badge", "seller_country"])
 
 #write df to csv
+#### NOTE: replace path with your correct local path
 X_test.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_test_clean_encoded.csv", index=False)
 

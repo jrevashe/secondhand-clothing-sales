@@ -114,8 +114,10 @@ mask = (train_prices >= low) & (train_prices <= high)
 X_train_clean = X_train.loc[mask].copy()
 y_train_clean = y_train.loc[mask].copy()
 
-###NOTE: replace path with your correct local one
-#saving cleaned training and test set locally for easy inspection
+
+#### NOTE: replace path with your correct local path
+
+
 X_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean.csv", index=False)
 y_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/y_train_clean.csv", index=False)
 
