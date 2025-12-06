@@ -13,6 +13,61 @@ Load Datasets
 X_train = pd.read_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean.csv")
 X_test = pd.read_csv("/Users/arevashe/secondhand-clothing-sales/data/X_test_clean.csv")
 
+y_train = pd.read_csv("/Users/arevashe/secondhand-clothing-sales/data/y_train_clean.csv",header=None).squeeze("columns")
+
+
+"""
+======================================================
+Initial Feature Engineering
+======================================================
+"""
+#brand processing
+brand_df = X_train.copy()
+brand_df["y"] = y_train
+
+# Brand-level mean + count of log-price (train ONLY)
+brand_stats = brand_df.groupby("brand_name")["y"].agg(["mean", "count"])
+
+global_mean = y_train.mean()
+k = 10  # smoothing strength
+
+# Smoothed target encoding
+brand_stats["smooth_te"] = (
+    brand_stats["count"] * brand_stats["mean"] + k * global_mean
+) / (brand_stats["count"] + k)
+
+# Bin smoothed into tiers (Budget to Ultra-Luxury)
+brand_stats["tier"] = pd.qcut(
+    brand_stats["smooth_te"],
+    q=5,
+    labels=["Budget", "Mid-Market", "Premium", "Luxury", "Ultra-Luxury"]
+)
+
+# Mapping: brand_name -> tier label
+brand_to_tier = brand_stats["tier"].to_dict()
+
+# Apply to train/test; unseen brands get "Unknown" tier
+X_train["brand_tier"] = X_train["brand_name"].map(brand_to_tier).fillna("Unknown")
+X_test["brand_tier"]  = X_test["brand_name"].map(brand_to_tier).fillna("Unknown")
+
+#remove raw brand_name column
+X_train = X_train.drop(columns=["brand_name"])
+X_test  = X_test.drop(columns=["brand_name"])
+
+
+
+# Handle NaN shipping times, impute with median and create missing indicator
+X_train["ships_missing"] = X_train["usually_ships_within_days"].isna().astype(int)
+X_test["ships_missing"]  = X_test["usually_ships_within_days"].isna().astype(int)
+
+median_ship = X_train["usually_ships_within_days"].median()
+
+X_train["usually_ships_within_days"] = (
+    X_train["usually_ships_within_days"].fillna(median_ship)
+)
+X_test["usually_ships_within_days"] = (
+    X_test["usually_ships_within_days"].fillna(median_ship)
+)
 """
 ======================================================
 Functions
@@ -323,6 +378,8 @@ one_hot_cols = [
     "cleaned_product_material",
     "cleaned_color_clean",
     "cleaned_seller_country",
+    "cleaned_seller_badge",
+    "brand_tier",
 ]
 
 X_train = pd.get_dummies(X_train, columns=one_hot_cols, prefix=one_hot_cols)

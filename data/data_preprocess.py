@@ -82,10 +82,10 @@ def parse_ship_time(x):
 
 df["usually_ships_within_days"] = df["usually_ships_within"].apply(parse_ship_time)
 
-# brand frequency-encoded, (Too many brands for one-hot, this is just the most simple solution I can think of, can be changed later)
-df["brand_popularity"] = df["brand_name"].map(
-    df["brand_name"].value_counts(normalize=True)
-)
+# # brand frequency-encoded, (Too many brands for one-hot, this is just the most simple solution I can think of, can be changed later)
+# df["brand_popularity"] = df["brand_name"].map(
+#     df["brand_name"].value_counts(normalize=True)
+# )
 
 df.to_csv("/Users/arevashe/secondhand-clothing-sales/data/clean.csv")
 df.info()
@@ -101,7 +101,7 @@ numeric_features = [
     "seller_pass_rate",
     "condition_score",
     "condition_missing",
-    "brand_popularity",
+    # "brand_popularity",
 ]
 
 cats = [
@@ -110,7 +110,8 @@ cats = [
     "product_material",
     "color_clean",
     "seller_badge",
-    "seller_country"
+    "seller_country",
+    "brand_name",
 ]
 
 feature_cols = numeric_features + cats
