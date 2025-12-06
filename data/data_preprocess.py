@@ -15,7 +15,7 @@ df = df[(df["product_gender_target"] != "Men") & (df["product_category"].str.con
 
 # product_gender_target will only have entries w/ "Women" and product_category will only have entries w/ "Women's clothing" so dropping these columns as they
 # will not contribute to the predictions
-df = df.drop(["product_gender_target", "product_category"], axis=1)
+#df = df.drop(["product_gender_target", "product_category"], axis=1)
 
 # Map conditions to ordinal
 condition_map = {
@@ -39,13 +39,30 @@ df["condition_score"] = df["condition_score"].fillna(0)
 
 
 def clean_color(x):
-    # If it's missing (NaN), give it a special category
     if pd.isna(x):
         return "unknown"
-    x = str(x).lower().strip()
-    # If it’s multi-word like "Black Navy", take the first color
-    x = x.split()[0]
-    return x
+    
+    x = str(x).lower()
+    
+    # Standardize separators
+    x = x.replace("/", " ").replace("&", " ")
+
+    tokens = x.split()
+
+    # If any token exactly matches a known color category, pick first match
+    base_colors = [
+        "black","blue","navy","brown","beige","green","pink","white",
+        "red","grey","gray","yellow","orange","purple","gold","silver",
+        "burgundy","metallic","multicolour","multicolor","turquoise"
+    ]
+
+    for t in tokens:
+        if t in base_colors:
+            return t
+
+    # fallback: return first token
+    return tokens[0]
+
 
 df["color_clean"] = df["product_color"].apply(clean_color)
 
