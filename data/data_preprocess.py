@@ -119,5 +119,7 @@ y_train_clean = y_train.loc[mask].copy()
 X_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean.csv", index=False)
 y_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/y_train_clean.csv", index=False)
 
+X_test.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_test_clean.csv", index=False)
+y_test.to_csv("/Users/arevashe/secondhand-clothing-sales/data/y_test_clean.csv", index=False)
 # print(f"X_train_clean: {X_train_clean}")
 # print(f"y_train_clean: {y_train_clean}")
