@@ -8,7 +8,10 @@ RANDOM_STATE = 0
 df = pd.read_csv("vestiaire.csv")
 
 # Drop rows with missing target
-df = df.dropna(subset=["price_usd"])
+df = df.dropna(subset=["seller_price"])
+
+# narrowed dataset down to women clothing only
+df = df[(df["product_gender_target"] != "Men") & (df["product_category"].str.contains("Clothing", case=False, na=False))]
 
 # Map conditions to ordinal
 condition_map = {
@@ -63,7 +66,9 @@ df["brand_popularity"] = df["brand_name"].map(
     df["brand_name"].value_counts(normalize=True)
 )
 
-target = "price_usd"
+df.info()
+
+target = "seller_price"
 
 numeric_features = [
     "product_like_count",        
@@ -92,7 +97,7 @@ feature_cols = numeric_features + cats
 # The features I did not include were ID categories, categories that were too wordy, and ones that were too related to price_usd
 
 X = df[feature_cols].copy()
-y = np.log1p(df["price_usd"])
+y = np.log1p(df["seller_price"])
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=RANDOM_STATE
@@ -111,5 +116,5 @@ y_train_clean = y_train.loc[mask].copy()
 X_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean.csv")
 y_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/y_train_clean.csv")
 
-print(f"X_train_clean: {X_train_clean}")
-print(f"y_train_clean: {y_train_clean}")
+# print(f"X_train_clean: {X_train_clean}")
+# print(f"y_train_clean: {y_train_clean}")
