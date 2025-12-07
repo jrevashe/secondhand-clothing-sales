@@ -564,7 +564,8 @@ Dropping Columns based on most recent VIF test
 # 66           brand_tier_Premium    5.468890
 # 67      brand_tier_Ultra-Luxury    1.940272
 
-
+X_train.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean_encoded.csv", index=False)
+X_test.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_test_clean_encoded.csv", index=False)
 
 vif_col_drop = ["cleaned_product_type_1", "cleaned_product_season_2", "cleaned_product_material_6", "cleaned_product_condition_5","cleaned_product_condition_6", "cleaned_color_clean_4"]
 
@@ -579,5 +580,5 @@ Write df to csv
 
 #### NOTE: replace path with your correct local path
 #write df to csv
-X_train.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean_encoded.csv", index=False)
-X_test.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_test_clean_encoded.csv", index=False)
+X_train.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean_encoded_VIF.csv", index=False)
+X_test.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_test_clean_encoded_VIF.csv", index=False)
