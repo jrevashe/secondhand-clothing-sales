@@ -30,11 +30,12 @@ print("=" * 70)
 print("\nLoading data...")
 
 # Load preprocessed and encoded datasets
-X_train = pd.read_csv("../data/X_train_clean_encoded.csv")
-X_test = pd.read_csv("../data/X_test_clean_encoded.csv")
+X_train = pd.read_csv("../data/X_train_clean_encoded_FULL.csv")
+X_test = pd.read_csv("../data/X_test_clean_encoded_FULL.csv")
 y_train = pd.read_csv("../data/y_train_clean.csv", header=None).squeeze("columns")
 y_test = pd.read_csv("../data/y_test_clean.csv", header=None).squeeze("columns")
 
+print("Note: Using FULL feature set (no VIF filtering for tree-based models)")
 print(f"Training set shape: X_train {X_train.shape}, y_train {y_train.shape}")
 print(f"Test set shape: X_test {X_test.shape}, y_test {y_test.shape}")
 print(f"Number of features: {X_train.shape[1]}")

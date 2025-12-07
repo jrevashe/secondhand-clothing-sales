@@ -5,40 +5,40 @@ IEOR 142A - Secondhand Clothing Price Prediction
 
 MODEL CONFIGURATION:
   Model Type: Ridge Regression (L2 Regularization)
-  Best Alpha: 100.0
-  Number of Features: 62
+  Best Alpha: 10.0
+  Number of Features: 63
   Training Samples: 152928
   Test Samples: 38440
 
 PERFORMANCE METRICS (Log Scale):
-  Training RMSE: 0.8820
-  Test RMSE:     0.9074
-  Training MAE:  0.6978
-  Test MAE:      0.7101
-  Training R²:   0.2077
-  Test R²:       0.2143
+  Training RMSE: 0.7052
+  Test RMSE:     0.7378
+  Training MAE:  0.5457
+  Test MAE:      0.5625
+  Training R²:   0.4935
+  Test R²:       0.4806
 
 PERFORMANCE METRICS (Original Scale - USD):
-  Training RMSE: $675.33
-  Test RMSE:     $3059.95
-  Training MAE:  $166.27
-  Test MAE:      $213.43
-  Training MAPE: 83.20%
-  Test MAPE:     91.03%
+  Training RMSE: $374.98
+  Test RMSE:     $729.65
+  Training MAE:  $141.21
+  Test MAE:      $174.73
+  Training MAPE: 62.11%
+  Test MAPE:     62.69%
 
 TOP 15 INFLUENTIAL FEATURES:
-  ↑ product_like_count                      :  0.2151
-  ↓ cleaned_product_type_3                  : -0.1800
-  ↑ cleaned_seller_country_2                :  0.1456
-  ↓ cleaned_product_type_2                  : -0.1427
-  ↑ brand_tier_Premium                      :  0.1392
-  ↓ cleaned_product_season_3                : -0.1270
-  ↑ brand_tier_Luxury                       :  0.1188
-  ↑ cleaned_seller_country_3                :  0.0984
-  ↑ cleaned_product_material_7              :  0.0925
-  ↓ seller_products_sold                    : -0.0919
-  ↑ seller_num_products_listed              :  0.0841
-  ↓ cleaned_product_material_4              : -0.0785
-  ↓ cleaned_product_material_2              : -0.0718
-  ↑ cleaned_product_material_13             :  0.0698
-  ↓ cleaned_product_condition_4             : -0.0687
+  ↑ brand_tier_Ultra-Luxury                 :  0.6225
+  ↓ cleaned_product_type_3                  : -0.1715
+  ↑ brand_tier_Luxury                       :  0.1650
+  ↓ cleaned_product_type_2                  : -0.1523
+  ↓ cleaned_product_season_3                : -0.1180
+  ↑ brand_tier_Premium                      :  0.1072
+  ↑ cleaned_product_condition_7             :  0.1012
+  ↑ cleaned_product_material_7              :  0.0927
+  ↓ seller_products_sold                    : -0.0889
+  ↑ brand_tier_Mid-Market                   :  0.0880
+  ↑ cleaned_seller_country_2                :  0.0728
+  ↓ cleaned_product_condition_4             : -0.0708
+  ↑ seller_num_products_listed              :  0.0690
+  ↑ cleaned_product_material_12             :  0.0619
+  ↑ product_like_count                      :  0.0580

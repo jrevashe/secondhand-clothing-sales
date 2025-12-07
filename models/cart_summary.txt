@@ -8,47 +8,47 @@ MODEL CONFIGURATION:
   Best Hyperparameters:
     max_depth: 15
     max_features: None
-    min_samples_leaf: 10
+    min_samples_leaf: 20
     min_samples_split: 50
-  Best Pruning Alpha: 0.000036
-  Number of Features: 62
+  Best Pruning Alpha: 0.000028
+  Number of Features: 69
   Training Samples: 152928
   Test Samples: 38440
 
 TREE STRUCTURE:
-  Number of nodes: 1969
-  Number of leaves: 985
+  Number of nodes: 1931
+  Number of leaves: 966
   Max depth: 15
 
 PERFORMANCE METRICS (Log Scale):
-  Training RMSE: 0.7789
-  Test RMSE:     0.8152
-  Training MAE:  0.6041
-  Test MAE:      0.6281
-  Training R²:   0.3821
-  Test R²:       0.3659
+  Training RMSE: 0.6374
+  Test RMSE:     0.6845
+  Training MAE:  0.4903
+  Test MAE:      0.5193
+  Training R²:   0.5862
+  Test R²:       0.5529
 
 PERFORMANCE METRICS (Original Scale - USD):
-  Training RMSE: $335.16
-  Test RMSE:     $675.07
-  Training MAE:  $138.65
-  Test MAE:      $170.34
-  Training MAPE: 69.09%
-  Test MAPE:     72.16%
+  Training RMSE: $306.66
+  Test RMSE:     $657.93
+  Training MAE:  $121.52
+  Test MAE:      $153.67
+  Training MAPE: 54.81%
+  Test MAPE:     58.48%
 
 TOP 15 IMPORTANT FEATURES:
-  product_like_count                      :  0.3060
-  seller_num_followers                    :  0.1712
-  seller_pass_rate                        :  0.0858
-  seller_num_products_listed              :  0.0830
-  seller_products_sold                    :  0.0741
-  cleaned_seller_country_2                :  0.0492
-  cleaned_product_type_3                  :  0.0480
-  cleaned_product_type_2                  :  0.0387
-  cleaned_seller_country_3                :  0.0339
-  cleaned_product_material_7              :  0.0271
-  cleaned_product_season_3                :  0.0109
-  cleaned_product_material_2              :  0.0099
-  cleaned_product_material_27             :  0.0082
-  brand_tier_Luxury                       :  0.0078
-  ships_missing                           :  0.0063
+  brand_tier_Ultra-Luxury                 :  0.5987
+  cleaned_product_type_1                  :  0.0411
+  seller_num_followers                    :  0.0383
+  brand_tier_Luxury                       :  0.0366
+  seller_num_products_listed              :  0.0354
+  cleaned_product_type_5                  :  0.0344
+  seller_products_sold                    :  0.0316
+  seller_pass_rate                        :  0.0253
+  cleaned_product_condition_7             :  0.0224
+  brand_tier_Premium                      :  0.0159
+  cleaned_product_material_7              :  0.0144
+  brand_tier_Mid-Market                   :  0.0143
+  cleaned_product_condition_6             :  0.0122
+  product_like_count                      :  0.0120
+  cleaned_seller_country_2                :  0.0117
