@@ -349,30 +349,20 @@ def transform_product_condition(entry):
                                }
 
     """
-    if pd.isna(entry):
-        return 0
-
-    if "Poor condition" in entry:
-
-        return 1
-    if "Fair condition" in entry:
-
-        return 2
-    if "Satisfactory condition" in entry:
-
-        return 3
-    if "Good condition" in entry:
-
-        return 4
-    if "Very good condition" in entry:
-
-        return 5
-    if "Never worn" in entry:
-
-        return 6
     if "Never worn, with tag" in entry:
-
         return 7
+    if "Never worn" in entry:
+        return 6
+    if "Very good condition" in entry:
+        return 5
+    if "Good condition" in entry:
+        return 4
+    if "Satisfactory condition" in entry:
+        return 3
+    if "Fair condition" in entry:
+        return 2
+    if "Poor condition" in entry:
+        return 1
     else:
         return 0
 
@@ -439,7 +429,7 @@ one_hot_cols = [
     "brand_tier",
 ]
 
-X_train = pd.get_dummies(X_train, columns=one_hot_cols, prefix=one_hot_cols,  drop_first=True).astype(int)
+X_train = pd.get_dummies(X_train, columns=one_hot_cols, prefix=one_hot_cols,  drop_first=True)
 
 #write df to csv
 X_train.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean_encoded.csv", index=False)
@@ -480,7 +470,7 @@ X_test["cleaned_seller_country"] = X_test["seller_country"].apply(transform_sell
 print(f"seller_country encoded count is: {X_test['cleaned_seller_country'].value_counts().sum()}")
 
 X_test["cleaned_product_condition"] = X_test["product_condition"].apply(transform_product_condition)
-(f"product_condition encoded count is: {X_test['product_condition'].value_counts().sum()}")
+print(f"product_condition encoded count is: {X_test['product_condition'].value_counts().sum()}")
 
 
 #drop categorical columns
