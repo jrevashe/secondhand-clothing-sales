@@ -1,0 +1,57 @@
+======================================================================
+GRADIENT BOOSTING MODEL SUMMARY
+IEOR 142A - Secondhand Clothing Price Prediction
+======================================================================
+
+MODEL CONFIGURATION:
+  Model Type: Gradient Boosting Regressor
+  Best Hyperparameters:
+    learning_rate: 0.1
+    max_depth: 5
+    max_features: None
+    min_samples_leaf: 10
+    min_samples_split: 20
+    n_estimators: 200
+    subsample: 0.8
+  Number of Estimators: 500
+  Number of Features: 69
+  Training Samples: 152928
+  Test Samples: 38440
+
+TRAINING DETAILS:
+  Best iteration: 500
+  Early stopping used: Yes (patience=20)
+  Grid search time: 2.25 minutes
+
+PERFORMANCE METRICS (Log Scale):
+  Training RMSE: 0.5902
+  Test RMSE:     0.6292
+  Training MAE:  0.4511
+  Test MAE:      0.4760
+  Training R²:   0.6453
+  Test R²:       0.6222
+
+PERFORMANCE METRICS (Original Scale - USD):
+  Training RMSE: $295.38
+  Test RMSE:     $640.22
+  Training MAE:  $113.98
+  Test MAE:      $142.97
+  Training MAPE: 49.48%
+  Test MAPE:     52.18%
+
+TOP 15 IMPORTANT FEATURES:
+  brand_tier_Ultra-Luxury                 :  0.5284
+  seller_num_followers                    :  0.0611
+  seller_num_products_listed              :  0.0562
+  seller_products_sold                    :  0.0409
+  cleaned_product_type_1                  :  0.0342
+  brand_tier_Luxury                       :  0.0314
+  seller_pass_rate                        :  0.0296
+  cleaned_product_type_5                  :  0.0264
+  product_like_count                      :  0.0257
+  cleaned_product_condition_7             :  0.0175
+  cleaned_product_material_7              :  0.0148
+  brand_tier_Premium                      :  0.0131
+  cleaned_seller_country_2                :  0.0114
+  brand_tier_Mid-Market                   :  0.0098
+  cleaned_seller_country_3                :  0.0089

@@ -49,10 +49,10 @@ print("=" * 70)
 
 # Define parameter grid
 param_grid = {
-    'max_depth': [5, 10, 15, 20, 25, None],
-    'min_samples_split': [2, 10, 20, 50],
-    'min_samples_leaf': [1, 5, 10, 20],
-    'max_features': ['sqrt', 'log2', None]
+    'max_depth': [10, 15, 20, 30, None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 5],
+    'max_features': [None]
 }
 
 print("\nParameter Grid:")
@@ -101,7 +101,7 @@ impurities = path.impurities
 print(f"\nNumber of alpha values to test: {len(ccp_alphas)}")
 
 # Train trees with different alpha values (using a subset for efficiency)
-alpha_subset = ccp_alphas[::max(1, len(ccp_alphas)//20)]  # Test ~20 alphas
+alpha_subset = ccp_alphas[::max(1, len(ccp_alphas)//30)]  # Test ~20 alphas
 train_scores = []
 test_scores = []
 

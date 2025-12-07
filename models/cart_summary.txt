@@ -6,49 +6,49 @@ IEOR 142A - Secondhand Clothing Price Prediction
 MODEL CONFIGURATION:
   Model Type: CART (Regression Tree)
   Best Hyperparameters:
-    max_depth: 15
+    max_depth: 10
     max_features: None
-    min_samples_leaf: 20
-    min_samples_split: 50
-  Best Pruning Alpha: 0.000028
+    min_samples_leaf: 5
+    min_samples_split: 2
+  Best Pruning Alpha: 0.000030
   Number of Features: 69
   Training Samples: 152928
   Test Samples: 38440
 
 TREE STRUCTURE:
-  Number of nodes: 1931
-  Number of leaves: 966
-  Max depth: 15
+  Number of nodes: 861
+  Number of leaves: 431
+  Max depth: 10
 
 PERFORMANCE METRICS (Log Scale):
-  Training RMSE: 0.6374
-  Test RMSE:     0.6845
-  Training MAE:  0.4903
-  Test MAE:      0.5193
-  Training R²:   0.5862
-  Test R²:       0.5529
+  Training RMSE: 0.6650
+  Test RMSE:     0.6993
+  Training MAE:  0.5135
+  Test MAE:      0.5333
+  Training R²:   0.5496
+  Test R²:       0.5333
 
 PERFORMANCE METRICS (Original Scale - USD):
-  Training RMSE: $306.66
-  Test RMSE:     $657.93
-  Training MAE:  $121.52
-  Test MAE:      $153.67
-  Training MAPE: 54.81%
-  Test MAPE:     58.48%
+  Training RMSE: $315.42
+  Test RMSE:     $663.34
+  Training MAE:  $125.22
+  Test MAE:      $155.49
+  Training MAPE: 57.55%
+  Test MAPE:     59.40%
 
 TOP 15 IMPORTANT FEATURES:
-  brand_tier_Ultra-Luxury                 :  0.5987
-  cleaned_product_type_1                  :  0.0411
-  seller_num_followers                    :  0.0383
-  brand_tier_Luxury                       :  0.0366
-  seller_num_products_listed              :  0.0354
-  cleaned_product_type_5                  :  0.0344
-  seller_products_sold                    :  0.0316
-  seller_pass_rate                        :  0.0253
-  cleaned_product_condition_7             :  0.0224
-  brand_tier_Premium                      :  0.0159
-  cleaned_product_material_7              :  0.0144
-  brand_tier_Mid-Market                   :  0.0143
-  cleaned_product_condition_6             :  0.0122
-  product_like_count                      :  0.0120
-  cleaned_seller_country_2                :  0.0117
+  brand_tier_Ultra-Luxury                 :  0.6386
+  cleaned_product_type_1                  :  0.0438
+  brand_tier_Luxury                       :  0.0390
+  cleaned_product_type_5                  :  0.0366
+  seller_num_followers                    :  0.0289
+  seller_num_products_listed              :  0.0243
+  cleaned_product_condition_7             :  0.0232
+  seller_products_sold                    :  0.0232
+  seller_pass_rate                        :  0.0219
+  brand_tier_Premium                      :  0.0170
+  brand_tier_Mid-Market                   :  0.0153
+  cleaned_product_material_7              :  0.0142
+  cleaned_product_condition_6             :  0.0123
+  cleaned_seller_country_2                :  0.0113
+  product_like_count                      :  0.0077
