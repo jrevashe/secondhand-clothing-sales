@@ -22,9 +22,9 @@ df = df[(df["product_gender_target"] != "Men") & (df["product_category"].str.con
 def clean_color(x):
     if pd.isna(x):
         return "unknown"
-    
+
     x = str(x).lower()
-    
+
     # Standardize separators
     x = x.replace("/", " ").replace("&", " ")
 
@@ -63,13 +63,13 @@ def parse_ship_time(x):
 
 df["usually_ships_within_days"] = df["usually_ships_within"].apply(parse_ship_time)
 
-df.to_csv("/Users/arevashe/secondhand-clothing-sales/data/clean.csv")
+df.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/clean.csv")
 df.info()
 
 target = "seller_price"
 
 numeric_features = [
-    "product_like_count",        
+    "product_like_count",
     "usually_ships_within_days",
     "seller_products_sold",
     "seller_num_products_listed",
@@ -110,7 +110,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 # )
 
 # remove outliers in price_usd for training set
-train_prices = np.expm1(y_train) 
+train_prices = np.expm1(y_train)
 low = train_prices.quantile(0.001)
 high = train_prices.quantile(0.995)
 mask = (train_prices >= low) & (train_prices <= high)
@@ -119,16 +119,15 @@ y_train_clean = y_train.loc[mask].copy()
 
 #inspecting product_condition
 print(f"X_Train lengthe: { len(X_train)}")
-print(f"X_Train unique entries are: { X_train["product_condition"].unique()}")
-#total matches number of rows = 38440
-print(f"X_Train unique entries count: { X_train["product_condition"].value_counts().sum()}")
-print(f"X_Train missing entries count: { X_train["product_condition"].isna().sum()}")
+# #total matches number of rows = 38440
+print(f"X_Train unique entries are: { X_train['product_condition'].unique()}")
+print(f"X_Train unique entries count: { X_train['product_condition'].value_counts().sum()}")
+print(f"X_Train missing entries count: { X_train['product_condition'].isna().sum()}")
 
-print(f"X_test lengthe: { len(X_test)}")
-#total matches number of rows = 38440
-print(f"X_test unique entries are: { X_test["product_condition"].unique()}")
-print(f"X_test unique entries count: { X_test["product_condition"].value_counts().sum()}")
-print(f"X_test missing entries count: { X_test["product_condition"].isna().sum()}")
+print(f"X_test unique entries are: { X_test['product_condition'].unique()}")
+print(f"X_test unique entries count: { X_test['product_condition'].value_counts().sum()}")
+print(f"X_test missing entries count: { X_test['product_condition'].isna().sum()}")
+#
 
 ###results:
 # X_Train lengthe: 153757
@@ -147,10 +146,10 @@ print(f"X_test missing entries count: { X_test["product_condition"].isna().sum()
 
 
 #### NOTE: replace path with your correct local path
-X_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_train_clean.csv", index=False)
-y_train_clean.to_csv("/Users/arevashe/secondhand-clothing-sales/data/y_train_clean.csv", index=False)
+X_train_clean.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/X_train_clean.csv", index=False)
+y_train_clean.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/y_train_clean.csv", index=False, header=False)
 
-X_test.to_csv("/Users/arevashe/secondhand-clothing-sales/data/X_test_clean.csv", index=False)
-y_test.to_csv("/Users/arevashe/secondhand-clothing-sales/data/y_test_clean.csv", index=False)
+X_test.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/X_test_clean.csv", index=False)
+y_test.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/y_test_clean.csv", index=False, header=False)
 # print(f"X_train_clean: {X_train_clean}")
 # print(f"y_train_clean: {y_train_clean}")

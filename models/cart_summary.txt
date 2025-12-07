@@ -1,0 +1,54 @@
+======================================================================
+CART DECISION TREE MODEL SUMMARY
+IEOR 142A - Secondhand Clothing Price Prediction
+======================================================================
+
+MODEL CONFIGURATION:
+  Model Type: CART (Regression Tree)
+  Best Hyperparameters:
+    max_depth: 15
+    max_features: None
+    min_samples_leaf: 10
+    min_samples_split: 50
+  Best Pruning Alpha: 0.000036
+  Number of Features: 62
+  Training Samples: 152928
+  Test Samples: 38440
+
+TREE STRUCTURE:
+  Number of nodes: 1969
+  Number of leaves: 985
+  Max depth: 15
+
+PERFORMANCE METRICS (Log Scale):
+  Training RMSE: 0.7789
+  Test RMSE:     0.8152
+  Training MAE:  0.6041
+  Test MAE:      0.6281
+  Training R²:   0.3821
+  Test R²:       0.3659
+
+PERFORMANCE METRICS (Original Scale - USD):
+  Training RMSE: $335.16
+  Test RMSE:     $675.07
+  Training MAE:  $138.65
+  Test MAE:      $170.34
+  Training MAPE: 69.09%
+  Test MAPE:     72.16%
+
+TOP 15 IMPORTANT FEATURES:
+  product_like_count                      :  0.3060
+  seller_num_followers                    :  0.1712
+  seller_pass_rate                        :  0.0858
+  seller_num_products_listed              :  0.0830
+  seller_products_sold                    :  0.0741
+  cleaned_seller_country_2                :  0.0492
+  cleaned_product_type_3                  :  0.0480
+  cleaned_product_type_2                  :  0.0387
+  cleaned_seller_country_3                :  0.0339
+  cleaned_product_material_7              :  0.0271
+  cleaned_product_season_3                :  0.0109
+  cleaned_product_material_2              :  0.0099
+  cleaned_product_material_27             :  0.0082
+  brand_tier_Luxury                       :  0.0078
+  ships_missing                           :  0.0063

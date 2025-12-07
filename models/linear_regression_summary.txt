@@ -1,0 +1,44 @@
+======================================================================
+LINEAR REGRESSION MODEL SUMMARY
+IEOR 142A - Secondhand Clothing Price Prediction
+======================================================================
+
+MODEL CONFIGURATION:
+  Model Type: Ridge Regression (L2 Regularization)
+  Best Alpha: 100.0
+  Number of Features: 62
+  Training Samples: 152928
+  Test Samples: 38440
+
+PERFORMANCE METRICS (Log Scale):
+  Training RMSE: 0.8820
+  Test RMSE:     0.9074
+  Training MAE:  0.6978
+  Test MAE:      0.7101
+  Training R²:   0.2077
+  Test R²:       0.2143
+
+PERFORMANCE METRICS (Original Scale - USD):
+  Training RMSE: $675.33
+  Test RMSE:     $3059.95
+  Training MAE:  $166.27
+  Test MAE:      $213.43
+  Training MAPE: 83.20%
+  Test MAPE:     91.03%
+
+TOP 15 INFLUENTIAL FEATURES:
+  ↑ product_like_count                      :  0.2151
+  ↓ cleaned_product_type_3                  : -0.1800
+  ↑ cleaned_seller_country_2                :  0.1456
+  ↓ cleaned_product_type_2                  : -0.1427
+  ↑ brand_tier_Premium                      :  0.1392
+  ↓ cleaned_product_season_3                : -0.1270
+  ↑ brand_tier_Luxury                       :  0.1188
+  ↑ cleaned_seller_country_3                :  0.0984
+  ↑ cleaned_product_material_7              :  0.0925
+  ↓ seller_products_sold                    : -0.0919
+  ↑ seller_num_products_listed              :  0.0841
+  ↓ cleaned_product_material_4              : -0.0785
+  ↓ cleaned_product_material_2              : -0.0718
+  ↑ cleaned_product_material_13             :  0.0698
+  ↓ cleaned_product_condition_4             : -0.0687
