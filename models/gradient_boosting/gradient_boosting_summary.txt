@@ -21,7 +21,7 @@ MODEL CONFIGURATION:
 TRAINING DETAILS:
   Best iteration: 500
   Early stopping used: Yes (patience=20)
-  Grid search time: 2.25 minutes
+  Grid search time: 9.20 minutes
 
 PERFORMANCE METRICS (Log Scale):
   Training RMSE: 0.5902

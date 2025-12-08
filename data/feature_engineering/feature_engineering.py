@@ -8,9 +8,9 @@ from sklearn.model_selection import train_test_split
 Load Datasets
 ======================================================
 """
-X_train = pd.read_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/X_train_clean.csv")
-X_test = pd.read_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/X_test_clean.csv")
-y_train = pd.read_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/y_train_clean.csv", header=None).squeeze("columns")
+X_train = pd.read_csv("../secondhand-clothing-sales/data/data_preprocessing/X_train_clean.csv")
+X_test = pd.read_csv("../secondhand-clothing-sales/data/data_preprocessing/X_test_clean.csv")
+y_train = pd.read_csv("../secondhand-clothing-sales/data/data_preprocessing/y_train_clean.csv", header=None).squeeze("columns")
 
 """
 ======================================================
@@ -288,8 +288,8 @@ print("SAVING DATA FILES")
 print("="*70)
 
 print(f"\n1. Saving FULL encoded data (for CART and Gradient Boosting)...")
-X_train.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/X_train_clean_encoded_FULL.csv", index=False)
-X_test.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/X_test_clean_encoded_FULL.csv", index=False)
+X_train.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/feature_engineering/X_train_clean_encoded_FULL.csv", index=False)
+X_test.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/feature_engineering/X_test_clean_encoded_FULL.csv", index=False)
 print(f"   ✓ X_train_FULL: {X_train.shape[0]} rows, {X_train.shape[1]} features")
 print(f"   ✓ X_test_FULL: {X_test.shape[0]} rows, {X_test.shape[1]} features")
 
@@ -322,8 +322,8 @@ Save VIF-Filtered Data (for Linear Regression)
 ======================================================
 """
 print(f"\n3. Saving VIF-filtered data (for Linear Regression)...")
-X_train_vif.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/X_train_clean_encoded.csv", index=False)
-X_test_vif.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/X_test_clean_encoded.csv", index=False)
+X_train_vif.to_csv("../secondhand-clothing-sales/data/feature_engineering/X_train_clean_encoded.csv", index=False)
+X_test_vif.to_csv("../secondhand-clothing-sales/data/feature_engineering/X_test_clean_encoded.csv", index=False)
 
 print("\n" + "="*70)
 print("DATA SAVING COMPLETE")

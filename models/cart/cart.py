@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 from sklearn.tree import DecisionTreeRegressor, plot_tree
 from sklearn.model_selection import GridSearchCV, cross_val_score
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, mean_absolute_percentage_error
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -138,6 +138,39 @@ print("\nMaking predictions...")
 y_train_pred = final_cart.predict(X_train)
 y_test_pred = final_cart.predict(X_test)
 
+# Transform predictions back to original scale
+y_train_original = np.expm1(y_train)
+y_test_original = np.expm1(y_test)
+y_train_pred_original = np.expm1(y_train_pred)
+y_test_pred_original = np.expm1(y_test_pred)
+
+# =============================================================================
+# 4. Stratified Results by Brand Tier
+# =============================================================================
+
+columns_tier = [column for column in X_test.columns if column.startswith("brand_tier_")]
+columns_tier_updated = X_test[columns_tier].idxmax(axis=1).str.replace("brand_tier_", '')
+for unique_tier in columns_tier_updated.unique():
+    mask = columns_tier_updated == unique_tier
+
+    y_true_unique_tier = y_test_original[mask]
+    y_pred_unique_tier = y_test_pred_original[mask]
+
+    r2_tier = r2_score(y_true_unique_tier, y_pred_unique_tier)
+    mae_tier = mean_absolute_error(y_true_unique_tier, y_pred_unique_tier)
+    mape_tier = mean_absolute_percentage_error(y_true_unique_tier, y_pred_unique_tier) * 100
+
+    print("=" * 70)
+    print(f"\n{unique_tier} Metrics Below ")
+    print("=" * 70)
+    print(f"sample size is {len(y_true_unique_tier)}")
+    print(f"R squared is {r2_tier:.4f}")
+    print(f"MAE is ${mae_tier:.2f}")
+    print(f"MAPE is {mape_tier:.2f}%")
+    print(f"average true price is ${y_true_unique_tier.mean():.2f}")
+
+    print("=" * 70)
+
 # =============================================================================
 # 5. Model Evaluation
 # =============================================================================
@@ -161,11 +194,12 @@ print(f"  Test MAE:      {test_mae_log:.4f}")
 print(f"  Training R²:   {train_r2:.4f}")
 print(f"  Test R²:       {test_r2:.4f}")
 
-# Transform predictions back to original scale
-y_train_original = np.expm1(y_train)
-y_test_original = np.expm1(y_test)
-y_train_pred_original = np.expm1(y_train_pred)
-y_test_pred_original = np.expm1(y_test_pred)
+#moved above for stratified results
+# # Transform predictions back to original scale
+# y_train_original = np.expm1(y_train)
+# y_test_original = np.expm1(y_test)
+# y_train_pred_original = np.expm1(y_train_pred)
+# y_test_pred_original = np.expm1(y_test_pred)
 
 # Calculate metrics on original price scale
 train_rmse_original = np.sqrt(mean_squared_error(y_train_original, y_train_pred_original))

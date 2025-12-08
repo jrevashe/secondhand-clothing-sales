@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 RANDOM_STATE = 0
 
-df = pd.read_csv("vestiaire.csv")
+df = pd.read_csv("../vestiaire.csv")
 
 # Drop rows with missing target
 df = df.dropna(subset=["seller_price"])
@@ -63,7 +63,7 @@ def parse_ship_time(x):
 
 df["usually_ships_within_days"] = df["usually_ships_within"].apply(parse_ship_time)
 
-df.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/clean.csv")
+df.to_csv("../secondhand-clothing-sales/data/data_preprocessing/clean.csv")
 df.info()
 
 target = "seller_price"
@@ -146,10 +146,10 @@ print(f"X_test missing entries count: { X_test['product_condition'].isna().sum()
 
 
 #### NOTE: replace path with your correct local path
-X_train_clean.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/X_train_clean.csv", index=False)
-y_train_clean.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/y_train_clean.csv", index=False, header=False)
+X_train_clean.to_csv("../secondhand-clothing-sales/data/data_preprocessing/X_train_clean.csv", index=False)
+y_train_clean.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/data_preprocessing/y_train_clean.csv", index=False, header=False)
 
-X_test.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/X_test_clean.csv", index=False)
-y_test.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/y_test_clean.csv", index=False, header=False)
+X_test.to_csv("../secondhand-clothing-sales/data/data_preprocessing/X_test_clean.csv", index=False)
+y_test.to_csv("../secondhand-clothing-sales/data/data_preprocessing/y_test_clean.csv", index=False, header=False)
 # print(f"X_train_clean: {X_train_clean}")
 # print(f"y_train_clean: {y_train_clean}")
