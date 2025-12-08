@@ -145,7 +145,7 @@ print(f"X_test missing entries count: { X_test['product_condition'].isna().sum()
 
 
 
-#### NOTE: replace path with your correct local path
+#### NOTE!!!!!!! Replace path with your correct local path
 X_train_clean.to_csv("../secondhand-clothing-sales/data/data_preprocessing/X_train_clean.csv", index=False)
 y_train_clean.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/data_preprocessing/y_train_clean.csv", index=False, header=False)
 

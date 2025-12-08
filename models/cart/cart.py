@@ -374,7 +374,7 @@ print("Saved predictions to 'cart_predictions.csv'")
 importance_df_sorted.to_csv('cart_feature_importance.csv', index=False)
 print("Saved feature importance to 'cart_feature_importance.csv'")
 
-# Mmodel summary
+# Model summary
 with open('cart_summary.txt', 'w') as f:
     f.write("=" * 70 + "\n")
     f.write("CART DECISION TREE MODEL SUMMARY\n")

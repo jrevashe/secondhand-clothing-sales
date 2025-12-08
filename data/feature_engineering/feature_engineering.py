@@ -3,20 +3,21 @@ import pandas as pd
 import re
 from sklearn.model_selection import train_test_split
 
-"""
-======================================================
-Load Datasets
-======================================================
-"""
+
+################################################################################
+# Load Datasets
+################################################################################
+
+
 X_train = pd.read_csv("../secondhand-clothing-sales/data/data_preprocessing/X_train_clean.csv")
 X_test = pd.read_csv("../secondhand-clothing-sales/data/data_preprocessing/X_test_clean.csv")
 y_train = pd.read_csv("../secondhand-clothing-sales/data/data_preprocessing/y_train_clean.csv", header=None).squeeze("columns")
 
-"""
-======================================================
-Initial Feature Engineering
-======================================================
-"""
+
+################################################################################
+#Initial Feature Engineering
+################################################################################
+
 # Brand processing: convert brands into tiers using target encoding
 brand_df = X_train.copy()
 y_train = pd.to_numeric(y_train, errors="coerce")
@@ -52,11 +53,11 @@ median_ship = X_train["usually_ships_within_days"].median()
 X_train["usually_ships_within_days"] = X_train["usually_ships_within_days"].fillna(median_ship)
 X_test["usually_ships_within_days"] = X_test["usually_ships_within_days"].fillna(median_ship)
 
-"""
-======================================================
-Transformation Functions
-======================================================
-"""
+
+################################################################################
+# Transformation Functions
+################################################################################
+
 def transform_product_type(entry):
     if pd.isna(entry):
         return 0
@@ -181,6 +182,7 @@ def transform_color_clean(entry):
         return 14
     return 0
 
+
 def transform_seller_badge(entry):
     if pd.isna(entry):
         return 0
@@ -229,11 +231,11 @@ def transform_product_condition(entry):
         return 1
     return 0
 
-"""
-======================================================
-Apply Transformations
-======================================================
-"""
+
+################################################################################
+# Apply Transformations
+################################################################################
+
 # Transform X_train
 X_train["cleaned_product_type"] = X_train["product_type"].apply(transform_product_type)
 X_train["cleaned_product_season"] = X_train["product_season"].apply(transform_product_season)
@@ -256,11 +258,11 @@ X_test["cleaned_product_condition"] = X_test["product_condition"].apply(transfor
 
 X_test = X_test.drop(columns=["product_type", "product_season", "product_material", "color_clean", "seller_badge", "seller_country", "product_condition"])
 
-"""
-======================================================
-One-Hot Encoding
-======================================================
-"""
+
+################################################################################
+# One-Hot Encoding
+################################################################################
+
 one_hot_cols = [
     "cleaned_product_type",
     "cleaned_product_season",
@@ -278,11 +280,11 @@ X_test = pd.get_dummies(X_test, columns=one_hot_cols, prefix=one_hot_cols, drop_
 # Align X_test columns to X_train
 X_test = X_test.reindex(columns=X_train.columns, fill_value=0)
 
-"""
-======================================================
-Save FULL Data (for CART and Gradient Boosting)
-======================================================
-"""
+
+################################################################################
+# Save FULL Data (for CART and Gradient Boosting)
+################################################################################
+
 print("\n" + "="*70)
 print("SAVING DATA FILES")
 print("="*70)
@@ -293,12 +295,12 @@ X_test.to_csv("/Users/skygastinel/indeng/secondhand-clothing-sales/data/feature_
 print(f"   ✓ X_train_FULL: {X_train.shape[0]} rows, {X_train.shape[1]} features")
 print(f"   ✓ X_test_FULL: {X_test.shape[0]} rows, {X_test.shape[1]} features")
 
-"""
-======================================================
-VIF Filtering (for Linear Regression only)
-======================================================
-"""
-print(f"\n2. Applying VIF filtering (for Linear Regression only)...")
+
+################################################################################
+#VIF Filtering (for Linear Regression only)
+################################################################################
+
+print(f"\n2. VIF filtering (for Linear Regression)")
 
 vif_col_drop = [
     "cleaned_product_type_1",
@@ -316,11 +318,11 @@ print(f"   ✓ Removed {len(vif_col_drop)} high VIF features (VIF > 10)")
 print(f"   ✓ X_train_VIF: {X_train_vif.shape[0]} rows, {X_train_vif.shape[1]} features")
 print(f"   ✓ X_test_VIF: {X_test_vif.shape[0]} rows, {X_test_vif.shape[1]} features")
 
-"""
-======================================================
-Save VIF-Filtered Data (for Linear Regression)
-======================================================
-"""
+
+################################################################################
+#Save VIF-Filtered Data (for Linear Regression)
+################################################################################
+
 print(f"\n3. Saving VIF-filtered data (for Linear Regression)...")
 X_train_vif.to_csv("../secondhand-clothing-sales/data/feature_engineering/X_train_clean_encoded.csv", index=False)
 X_test_vif.to_csv("../secondhand-clothing-sales/data/feature_engineering/X_test_clean_encoded.csv", index=False)
