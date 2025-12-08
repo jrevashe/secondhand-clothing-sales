@@ -48,46 +48,50 @@ Training
 
 
 **Directory Structure**
-
+```text
+<tree>
 secondhand-clothing-sales/
-│   README.md
-|   .gitattributes
-│   requirements.txt
+│
+├── README.md
+├── .gitattributes
+├── requirements.txt
 │
 ├── data/
 │   ├── vestaire.csv
 │   ├── vif.py
 │   ├── data_preprocessing/
-│   │    clean.csv
-│   │    data_preprocess.pt
-│   │    X_test_clean.csv
-│   │    X_train_clean.csv
-│   │    y_test_clean.csv
-│   │    y_train_clean.csv
+│   │   ├── clean.csv
+│   │   ├── data_preprocess.py
+│   │   ├── X_test_clean.csv
+│   │   ├── X_train_clean.csv
+│   │   ├── y_test_clean.csv
+│   │   └── y_train_clean.csv
 │   └── feature_engineering/
-│   │    feature_engineering.py
-│   │    X_test_clean_encoded.csv
-│   │    X_train_clean_encoded.csv
-│   │    X_test_clean_encoded_FULL.csv
-│   │    X_train_clean_encoded_FULL.csv
-├── models/
-│   ├── cart/
-│   │    cart_feature_importance.csv
-│   │    cart.py
-│   │    cart_predictions.csv
-│   │    cart_results.csv
-│   │    cart_summary.txt
-│   │    cart_tree_visualization.png
-│   └── gradient_boosting/
-│   │    gradient_boosting.py
-│   │    gradient_boosting_feature_importance.csv
-│   │    gradient_boosting_predictions.csv
-│   │    gradient_boosting_results.csv
-│   │    gradient_boosting_summary.txt
-│   └── linear_regression/
-│   │    linear_regression.py
-│   │    linear_regression_feature_importance.csv
-│   │    linear_regression_predictions.csv
-│   │    linear_regression_results.png
-│   │    linear_regression_summary.txt
-
+│       ├── feature_engineering.py
+│       ├── X_test_clean_encoded.csv
+│       ├── X_train_clean_encoded.csv
+│       ├── X_test_clean_encoded_FULL.csv
+│       └── X_train_clean_encoded_FULL.csv
+│
+└── models/
+    ├── cart/
+    │   ├── cart.py
+    │   ├── cart_feature_importance.csv
+    │   ├── cart_predictions.csv
+    │   ├── cart_results.csv
+    │   ├── cart_summary.txt
+    │   └── cart_tree_visualization.png
+    │
+    ├── gradient_boosting/
+    │   ├── gradient_boosting.py
+    │   ├── gradient_boosting_feature_importance.csv
+    │   ├── gradient_boosting_predictions.csv
+    │   ├── gradient_boosting_results.csv
+    │   └── gradient_boosting_summary.txt
+    │
+    └── linear_regression/
+        ├── linear_regression.py
+        ├── linear_regression_feature_importance.csv
+        ├── linear_regression_predictions.csv
+        ├── linear_regression_results.png
+        └── linear_regression_summary.txt
