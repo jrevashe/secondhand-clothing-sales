@@ -1,8 +1,7 @@
 # UC Berkeley 142A Final Project (Secondhand Clothing Price Prediction)
 
-======================================================================================================================================================
 **Requirements**
-======================================================================================================================================================
+
 
 #Recommended (easy)
 
@@ -19,9 +18,9 @@ Git LFS was used for pushing the original dataset due to its large size. Ensure 
 brew install git-lfs
 git lfs install
 
-======================================================================================================================================================
-Clone Git Repository
-======================================================================================================================================================
+
+**Clone Git Repository**
+
 
 Open terminal on your local machine
 Navigate to the directory to store project
@@ -30,9 +29,9 @@ Run 'git clone https://github.com/jrevashe/secondhand-clothing-sales.git'
 
 Navigate to repository directory on terminal and open the repository on preferred IDE
 
-======================================================================================================================================================
-Steps
-======================================================================================================================================================
+
+**Steps**
+
 
 Data Preprocessing and Feature Engineering
 1) Run data/data_preprocessing/data_preprocessing.py
@@ -47,9 +46,8 @@ Training
 3) Run models/gradient_boosting/gradient_boosting.py
    c) Results saved to following files and terminal
 
-======================================================================================================================================================
-Directory Structure
-======================================================================================================================================================
+
+**Directory Structure**
 
 secondhand-clothing-sales/
 │   README.md
