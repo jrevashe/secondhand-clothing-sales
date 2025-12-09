@@ -28,7 +28,7 @@ np.random.seed(RANDOM_STATE)
 ################################################################################
 
 print("=" * 70)
-print("GRADIENT BOOSTING MODEL - SECONDHAND CLOTHING PRICE PREDICTION")
+print("GRADIENT BOOSTING MODEL")
 print("=" * 70)
 print("\nLoading data...")
 
@@ -38,7 +38,6 @@ X_test = pd.read_csv("../data/X_test_clean_encoded_FULL.csv")
 y_train = pd.read_csv("../data/y_train_clean.csv", header=None).squeeze("columns")
 y_test = pd.read_csv("../data/y_test_clean.csv", header=None).squeeze("columns")
 
-print("* Note * Using FULL feature set (no VIF filtering for tree-based models)")
 print(f"Training set shape: X_train {X_train.shape}, y_train {y_train.shape}")
 print(f"Test set shape: X_test {X_test.shape}, y_test {y_test.shape}")
 print(f"Number of features: {X_train.shape[1]}")
@@ -63,13 +62,13 @@ param_grid = {
 }
 
 print("\nParameter Grid:")
-print(f"  n_estimators: {param_grid['n_estimators']}")
-print(f"  learning_rate: {param_grid['learning_rate']}")
-print(f"  max_depth: {param_grid['max_depth']}")
-print(f"  min_samples_split: {param_grid['min_samples_split']}")
-print(f"  min_samples_leaf: {param_grid['min_samples_leaf']}")
-print(f"  subsample: {param_grid['subsample']}")
-print(f"  max_features: {param_grid['max_features']}")
+print(f"n_estimators: {param_grid['n_estimators']}")
+print(f"learning_rate: {param_grid['learning_rate']}")
+print(f"max_depth: {param_grid['max_depth']}")
+print(f"min_samples_split: {param_grid['min_samples_split']}")
+print(f"min_samples_leaf: {param_grid['min_samples_leaf']}")
+print(f"subsample: {param_grid['subsample']}")
+print(f"max_features: {param_grid['max_features']}")
 
 total_combinations = np.prod([len(v) for v in param_grid.values()])
 print(f"\nTotal parameter combinations to test: {total_combinations}")
@@ -208,13 +207,6 @@ print(f"  Test MAE:      {test_mae_log:.4f}")
 print(f"  Training R²:   {train_r2:.4f}")
 print(f"  Test R²:       {test_r2:.4f}")
 
-#moved above for stratified results
-# # Transform predictions back to original scale
-# y_train_original = np.expm1(y_train)
-# y_test_original = np.expm1(y_test)
-# y_train_pred_original = np.expm1(y_train_pred)
-# y_test_pred_original = np.expm1(y_test_pred)
-
 # Calculate metrics on original price scale
 train_rmse_original = np.sqrt(mean_squared_error(y_train_original, y_train_pred_original))
 test_rmse_original = np.sqrt(mean_squared_error(y_test_original, y_test_pred_original))
@@ -222,17 +214,17 @@ train_mae_original = mean_absolute_error(y_train_original, y_train_pred_original
 test_mae_original = mean_absolute_error(y_test_original, y_test_pred_original)
 
 print("\nPerformance on Original Price Scale (USD):")
-print(f"  Training RMSE: ${train_rmse_original:.2f}")
-print(f"  Test RMSE:     ${test_rmse_original:.2f}")
-print(f"  Training MAE:  ${train_mae_original:.2f}")
-print(f"  Test MAE:      ${test_mae_original:.2f}")
+print(f"Training RMSE: ${train_rmse_original:.2f}")
+print(f"Test RMSE:     ${test_rmse_original:.2f}")
+print(f"Training MAE:  ${train_mae_original:.2f}")
+print(f"Test MAE:      ${test_mae_original:.2f}")
 
 # Calculate MAPE
 train_mape = np.mean(np.abs((y_train_original - y_train_pred_original) / y_train_original)) * 100
 test_mape = np.mean(np.abs((y_test_original - y_test_pred_original) / y_test_original)) * 100
 
-print(f"  Training MAPE: {train_mape:.2f}%")
-print(f"  Test MAPE:     {test_mape:.2f}%")
+print(f"Training MAPE: {train_mape:.2f}%")
+print(f"Test MAPE:     {test_mape:.2f}%")
 
 ################################################################################
 # 6. Feature Importance Analysis
@@ -303,7 +295,7 @@ sns.set_style("whitegrid")
 # Create figure with multiple subplots
 fig = plt.figure(figsize=(18, 12))
 
-# Actual vs Predicted (Test Set) on Log Scale
+# Actual vs Predicted on Log Scale
 ax1 = plt.subplot(2, 3, 1)
 ax1.scatter(y_test, y_test_pred, alpha=0.5, s=10)
 ax1.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--', lw=2)
@@ -312,7 +304,7 @@ ax1.set_ylabel('Predicted Log(Price)')
 ax1.set_title(f'Actual vs Predicted (Test Set, Log Scale)\nR² = {test_r2:.4f}')
 ax1.grid(True, alpha=0.3)
 
-# Actual vs Predicted (Test Set) on Original Scale
+# Actual vs Predicted on Original Scale
 ax2 = plt.subplot(2, 3, 2)
 ax2.scatter(y_test_original, y_test_pred_original, alpha=0.5, s=10)
 ax2.plot([y_test_original.min(), y_test_original.max()],
@@ -393,63 +385,38 @@ with open('gradient_boosting_summary.txt', 'w') as f:
     f.write("=" * 70 + "\n\n")
 
     f.write("MODEL CONFIGURATION:\n")
-    f.write(f"  Model Type: Gradient Boosting Regressor\n")
-    f.write(f"  Best Hyperparameters:\n")
+    f.write(f"Model Type: Gradient Boosting Regressor\n")
+    f.write(f"Best Hyperparameters:\n")
     for param, value in grid_search.best_params_.items():
         f.write(f"    {param}: {value}\n")
-    f.write(f"  Number of Estimators: {final_gb.n_estimators_}\n")
-    f.write(f"  Number of Features: {X_train.shape[1]}\n")
-    f.write(f"  Training Samples: {X_train.shape[0]}\n")
-    f.write(f"  Test Samples: {X_test.shape[0]}\n\n")
+    f.write(f"Number of Estimators: {final_gb.n_estimators_}\n")
+    f.write(f"Number of Features: {X_train.shape[1]}\n")
+    f.write(f"Training Samples: {X_train.shape[0]}\n")
+    f.write(f"Test Samples: {X_test.shape[0]}\n\n")
 
     f.write("TRAINING DETAILS:\n")
-    f.write(f"  Best iteration: {best_iteration + 1}\n")
-    f.write(f"  Early stopping used: Yes (patience=20)\n")
-    f.write(f"  Grid search time: {elapsed_time/60:.2f} minutes\n\n")
+    f.write(f"Best iteration: {best_iteration + 1}\n")
+    f.write(f"Early stopping used: Yes (patience=20)\n")
+    f.write(f"Grid search time: {elapsed_time/60:.2f} minutes\n\n")
 
     f.write("PERFORMANCE METRICS (Log Scale):\n")
-    f.write(f"  Training RMSE: {train_rmse_log:.4f}\n")
-    f.write(f"  Test RMSE:     {test_rmse_log:.4f}\n")
-    f.write(f"  Training MAE:  {train_mae_log:.4f}\n")
-    f.write(f"  Test MAE:      {test_mae_log:.4f}\n")
-    f.write(f"  Training R²:   {train_r2:.4f}\n")
-    f.write(f"  Test R²:       {test_r2:.4f}\n\n")
+    f.write(f"Training RMSE: {train_rmse_log:.4f}\n")
+    f.write(f"Test RMSE:     {test_rmse_log:.4f}\n")
+    f.write(f"Training MAE:  {train_mae_log:.4f}\n")
+    f.write(f"Test MAE:      {test_mae_log:.4f}\n")
+    f.write(f"Training R²:   {train_r2:.4f}\n")
+    f.write(f"Test R²:       {test_r2:.4f}\n\n")
 
     f.write("PERFORMANCE METRICS (Original Scale - USD):\n")
-    f.write(f"  Training RMSE: ${train_rmse_original:.2f}\n")
-    f.write(f"  Test RMSE:     ${test_rmse_original:.2f}\n")
-    f.write(f"  Training MAE:  ${train_mae_original:.2f}\n")
-    f.write(f"  Test MAE:      ${test_mae_original:.2f}\n")
-    f.write(f"  Training MAPE: {train_mape:.2f}%\n")
-    f.write(f"  Test MAPE:     {test_mape:.2f}%\n\n")
+    f.write(f"Training RMSE: ${train_rmse_original:.2f}\n")
+    f.write(f"Test RMSE:     ${test_rmse_original:.2f}\n")
+    f.write(f"Training MAE:  ${train_mae_original:.2f}\n")
+    f.write(f"Test MAE:      ${test_mae_original:.2f}\n")
+    f.write(f"Training MAPE: {train_mape:.2f}%\n")
+    f.write(f"Test MAPE:     {test_mape:.2f}%\n\n")
 
     f.write("TOP 15 IMPORTANT FEATURES:\n")
     for idx, row in importance_df_sorted.head(15).iterrows():
         f.write(f"  {row['Feature']:40s}: {row['Importance']:7.4f}\n")
 
 print("Model summary saved to 'gradient_boosting_summary.txt'")
-
-################################################################################
-# 11. Model Comparison Summary
-################################################################################
-print("\n" + "=" * 70)
-print("GRADIENT BOOSTING MODEL COMPLETE")
-print("=" * 70)
-print("\nKey Takeaways:")
-print(f"  • The model achieves R² = {test_r2:.4f} on the test set")
-print(f"  • Average prediction error: ${test_mae_original:.2f} (MAE)")
-print(f"  • Mean percentage error: {test_mape:.2f}% (MAPE)")
-print(f"  • Number of boosting iterations: {final_gb.n_estimators_}")
-print(f"  • Most important feature: {importance_df_sorted.iloc[0]['Feature']}")
-
-#commented this out for now, since the values for linear regression are not accurate, either import the metrics found from their respective files or delete thsi
-# print("\nComparison Summary (Test Set Performance):")
-# print("  Model              | R²     | MAE ($)  | MAPE")
-# print("  " + "-" * 55)
-# print(f"  Linear Regression  | ~0.21  | ~$213    | ~91%")
-# print(f"  CART               | ~0.37  | ~$170    | ~72%")
-# print(f"  Gradient Boosting  | {test_r2:.4f} | ${test_mae_original:>7.2f} | {test_mape:>5.2f}%")
-#
-# print("\n" + "=" * 70)
-# print("ALL THREE MODELS COMPLETE - READY FOR REPORT!")
-# print("=" * 70)

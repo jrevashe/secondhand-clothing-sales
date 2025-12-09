@@ -270,7 +270,7 @@ sns.set_style("whitegrid")
 # Create figure with multiple subplots
 fig = plt.figure(figsize=(18, 12))
 
-# Actual vs. Predicted (Test Set) on Log Scale
+# Actual vs. Predicted on Log Scale
 ax1 = plt.subplot(2, 3, 1)
 ax1.scatter(y_test, y_test_pred, alpha=0.5, s=10)
 ax1.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--', lw=2)
@@ -279,7 +279,7 @@ ax1.set_ylabel('Predicted Log(Price)')
 ax1.set_title(f'Actual vs Predicted (Test Set, Log Scale)\nR² = {test_r2:.4f}')
 ax1.grid(True, alpha=0.3)
 
-# Actual vs Predicted (Test Set) on Original Scale
+# Actual vs Predicted on Original Scale
 ax2 = plt.subplot(2, 3, 2)
 ax2.scatter(y_test_original, y_test_pred_original, alpha=0.5, s=10)
 ax2.plot([y_test_original.min(), y_test_original.max()],
@@ -321,7 +321,6 @@ ax5.grid(True, alpha=0.3)
 ax5.set_xscale('log')
 
 # Distribution of Residuals
-
 ax6 = plt.subplot(2, 3, 6)
 ax6.hist(test_residuals, bins=50, alpha=0.7, color='steelblue', edgecolor='black')
 ax6.axvline(x=0, color='r', linestyle='--', lw=2)
@@ -382,53 +381,38 @@ with open('cart_summary.txt', 'w') as f:
     f.write("=" * 70 + "\n\n")
 
     f.write("MODEL CONFIGURATION:\n")
-    f.write(f"  Model Type: CART (Regression Tree)\n")
-    f.write(f"  Best Hyperparameters:\n")
+    f.write(f"Model Type: CART (Regression Tree)\n")
+    f.write(f"Best Hyperparameters:\n")
     for param, value in grid_search.best_params_.items():
         f.write(f"    {param}: {value}\n")
-    f.write(f"  Best Pruning Alpha: {best_alpha:.6f}\n")
-    f.write(f"  Number of Features: {X_train.shape[1]}\n")
-    f.write(f"  Training Samples: {X_train.shape[0]}\n")
-    f.write(f"  Test Samples: {X_test.shape[0]}\n\n")
+    f.write(f"Best Pruning Alpha: {best_alpha:.6f}\n")
+    f.write(f"Number of Features: {X_train.shape[1]}\n")
+    f.write(f"Training Samples: {X_train.shape[0]}\n")
+    f.write(f"Test Samples: {X_test.shape[0]}\n\n")
 
     f.write("TREE STRUCTURE:\n")
-    f.write(f"  Number of nodes: {final_cart.tree_.node_count}\n")
-    f.write(f"  Number of leaves: {final_cart.get_n_leaves()}\n")
-    f.write(f"  Max depth: {final_cart.get_depth()}\n\n")
+    f.write(f"Number of nodes: {final_cart.tree_.node_count}\n")
+    f.write(f"Number of leaves: {final_cart.get_n_leaves()}\n")
+    f.write(f"Max depth: {final_cart.get_depth()}\n\n")
 
     f.write("PERFORMANCE METRICS (Log Scale):\n")
-    f.write(f"  Training RMSE: {train_rmse_log:.4f}\n")
-    f.write(f"  Test RMSE:     {test_rmse_log:.4f}\n")
-    f.write(f"  Training MAE:  {train_mae_log:.4f}\n")
-    f.write(f"  Test MAE:      {test_mae_log:.4f}\n")
-    f.write(f"  Training R²:   {train_r2:.4f}\n")
-    f.write(f"  Test R²:       {test_r2:.4f}\n\n")
+    f.write(f"Training RMSE: {train_rmse_log:.4f}\n")
+    f.write(f"Test RMSE:     {test_rmse_log:.4f}\n")
+    f.write(f"Training MAE:  {train_mae_log:.4f}\n")
+    f.write(f"Test MAE:      {test_mae_log:.4f}\n")
+    f.write(f"Training R²:   {train_r2:.4f}\n")
+    f.write(f"Test R²:       {test_r2:.4f}\n\n")
 
     f.write("PERFORMANCE METRICS (Original Scale - USD):\n")
-    f.write(f"  Training RMSE: ${train_rmse_original:.2f}\n")
-    f.write(f"  Test RMSE:     ${test_rmse_original:.2f}\n")
-    f.write(f"  Training MAE:  ${train_mae_original:.2f}\n")
-    f.write(f"  Test MAE:      ${test_mae_original:.2f}\n")
-    f.write(f"  Training MAPE: {train_mape:.2f}%\n")
-    f.write(f"  Test MAPE:     {test_mape:.2f}%\n\n")
+    f.write(f"Training RMSE: ${train_rmse_original:.2f}\n")
+    f.write(f"Test RMSE:     ${test_rmse_original:.2f}\n")
+    f.write(f"Training MAE:  ${train_mae_original:.2f}\n")
+    f.write(f"Test MAE:      ${test_mae_original:.2f}\n")
+    f.write(f"Training MAPE: {train_mape:.2f}%\n")
+    f.write(f"Test MAPE:     {test_mape:.2f}%\n\n")
 
     f.write("TOP 15 IMPORTANT FEATURES:\n")
     for idx, row in importance_df_sorted.head(15).iterrows():
         f.write(f"  {row['Feature']:40s}: {row['Importance']:7.4f}\n")
 
 print("Saved model summary to 'cart_summary.txt'")
-
-print("\n" + "=" * 70)
-print("CART DECISION TREE MODEL COMPLETE")
-print("=" * 70)
-print("\nKey Takeaways:")
-print(f"  • The model achieves R² = {test_r2:.4f} on the test set")
-print(f"  • Average prediction error: ${test_mae_original:.2f} (MAE)")
-print(f"  • Mean percentage error: {test_mape:.2f}% (MAPE)")
-print(f"  • Tree depth: {final_cart.get_depth()}, Leaves: {final_cart.get_n_leaves()}")
-print(f"  • Most important feature: {importance_df_sorted.iloc[0]['Feature']}")
-print("\nComparison with Linear Regression:")
-print("  • CART can capture non-linear relationships")
-print("  • Feature importance shows which splits matter most")
-print("  • Tree structure is interpretable (see tree_visualization.png)")
-print("\nNext steps: Compare with Gradient Boosting model")

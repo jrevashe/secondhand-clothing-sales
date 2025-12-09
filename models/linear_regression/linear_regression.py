@@ -1,7 +1,7 @@
 """
 Linear Regression Model
 
-This model uses...
+This model uses
 - Ridge regularization (L2 penalty) to handle multicollinearity
 - Cross-validation for hyperparameter tuning
 - Feature standardization
@@ -105,6 +105,7 @@ for unique_tier in columns_tier_updated.unique():
     print(f"average true price is ${y_true_unique_tier.mean():.2f}")
 
     print("=" * 70)
+
 ################################################################################
 # 5. Model Evaluation
 ################################################################################
@@ -121,19 +122,12 @@ train_r2 = r2_score(y_train, y_train_pred)
 test_r2 = r2_score(y_test, y_test_pred)
 
 print("\nPerformance on Log-Transformed Target:")
-print(f"  Training RMSE: {train_rmse_log:.4f}")
-print(f"  Test RMSE:     {test_rmse_log:.4f}")
-print(f"  Training MAE:  {train_mae_log:.4f}")
-print(f"  Test MAE:      {test_mae_log:.4f}")
-print(f"  Training R²:   {train_r2:.4f}")
-print(f"  Test R²:       {test_r2:.4f}")
-
-#moved above
-# # Transform predictions back to original scale
-# y_train_original = np.expm1(y_train)
-# y_test_original = np.expm1(y_test)
-# y_train_pred_original = np.expm1(y_train_pred)
-# y_test_pred_original = np.expm1(y_test_pred)
+print(f"Training RMSE: {train_rmse_log:.4f}")
+print(f"Test RMSE:     {test_rmse_log:.4f}")
+print(f"Training MAE:  {train_mae_log:.4f}")
+print(f"Test MAE:      {test_mae_log:.4f}")
+print(f"Training R²:   {train_r2:.4f}")
+print(f"Test R²:       {test_r2:.4f}")
 
 #Metrics on original price scale
 train_rmse_original = np.sqrt(mean_squared_error(y_train_original, y_train_pred_original))
@@ -142,17 +136,17 @@ train_mae_original = mean_absolute_error(y_train_original, y_train_pred_original
 test_mae_original = mean_absolute_error(y_test_original, y_test_pred_original)
 
 print("\nPerformance on Original Price Scale (USD):")
-print(f"  Training RMSE: ${train_rmse_original:.2f}")
-print(f"  Test RMSE:     ${test_rmse_original:.2f}")
-print(f"  Training MAE:  ${train_mae_original:.2f}")
-print(f"  Test MAE:      ${test_mae_original:.2f}")
+print(f"Training RMSE: ${train_rmse_original:.2f}")
+print(f"Test RMSE:     ${test_rmse_original:.2f}")
+print(f"Training MAE:  ${train_mae_original:.2f}")
+print(f"Test MAE:      ${test_mae_original:.2f}")
 
 # Calculate MAPE
 train_mape = np.mean(np.abs((y_train_original - y_train_pred_original) / y_train_original)) * 100
 test_mape = np.mean(np.abs((y_test_original - y_test_pred_original) / y_test_original)) * 100
 
-print(f"  Training MAPE: {train_mape:.2f}%")
-print(f"  Test MAPE:     {test_mape:.2f}%")
+print(f"Training MAPE: {train_mape:.2f}%")
+print(f"Test MAPE:     {test_mape:.2f}%")
 
 ################################################################################
 # 6. Feature Importance Analysis
@@ -160,7 +154,6 @@ print(f"  Test MAPE:     {test_mape:.2f}%")
 print("\n" + "=" * 70)
 print("TOP 15 MOST INFLUENTIAL FEATURES (by absolute coefficient)")
 print("=" * 70)
-
 
 feature_names = X_train.columns
 coefficients = best_model.coef_
@@ -270,27 +263,27 @@ with open('linear_regression_summary.txt', 'w') as f:
     f.write("=" * 70 + "\n\n")
 
     f.write("MODEL CONFIGURATION:\n")
-    f.write(f"  Model Type: Ridge Regression (L2 Regularization)\n")
-    f.write(f"  Best Alpha: {ridge_cv.alpha_}\n")
-    f.write(f"  Number of Features: {X_train.shape[1]}\n")
-    f.write(f"  Training Samples: {X_train.shape[0]}\n")
-    f.write(f"  Test Samples: {X_test.shape[0]}\n\n")
+    f.write(f"Model Type: Ridge Regression (L2 Regularization)\n")
+    f.write(f"Best Alpha: {ridge_cv.alpha_}\n")
+    f.write(f"Number of Features: {X_train.shape[1]}\n")
+    f.write(f"Training Samples: {X_train.shape[0]}\n")
+    f.write(f"Test Samples: {X_test.shape[0]}\n\n")
 
     f.write("PERFORMANCE METRICS (Log Scale):\n")
-    f.write(f"  Training RMSE: {train_rmse_log:.4f}\n")
-    f.write(f"  Test RMSE:     {test_rmse_log:.4f}\n")
-    f.write(f"  Training MAE:  {train_mae_log:.4f}\n")
-    f.write(f"  Test MAE:      {test_mae_log:.4f}\n")
-    f.write(f"  Training R²:   {train_r2:.4f}\n")
-    f.write(f"  Test R²:       {test_r2:.4f}\n\n")
+    f.write(f"Training RMSE: {train_rmse_log:.4f}\n")
+    f.write(f"Test RMSE:     {test_rmse_log:.4f}\n")
+    f.write(f"Training MAE:  {train_mae_log:.4f}\n")
+    f.write(f"Test MAE:      {test_mae_log:.4f}\n")
+    f.write(f"Training R²:   {train_r2:.4f}\n")
+    f.write(f"Test R²:       {test_r2:.4f}\n\n")
 
     f.write("PERFORMANCE METRICS (Original Scale - USD):\n")
-    f.write(f"  Training RMSE: ${train_rmse_original:.2f}\n")
-    f.write(f"  Test RMSE:     ${test_rmse_original:.2f}\n")
-    f.write(f"  Training MAE:  ${train_mae_original:.2f}\n")
-    f.write(f"  Test MAE:      ${test_mae_original:.2f}\n")
-    f.write(f"  Training MAPE: {train_mape:.2f}%\n")
-    f.write(f"  Test MAPE:     {test_mape:.2f}%\n\n")
+    f.write(f"Training RMSE: ${train_rmse_original:.2f}\n")
+    f.write(f"Test RMSE:     ${test_rmse_original:.2f}\n")
+    f.write(f"Training MAE:  ${train_mae_original:.2f}\n")
+    f.write(f"Test MAE:      ${test_mae_original:.2f}\n")
+    f.write(f"Training MAPE: {train_mape:.2f}%\n")
+    f.write(f"Test MAPE:     {test_mape:.2f}%\n\n")
 
     f.write("TOP 15 INFLUENTIAL FEATURES:\n")
     for idx, row in coef_df_sorted.head(15).iterrows():
@@ -298,13 +291,3 @@ with open('linear_regression_summary.txt', 'w') as f:
         f.write(f"  {direction} {row['Feature']:40s}: {row['Coefficient']:7.4f}\n")
 
 print("Saved model summary to 'linear_regression_summary.txt'")
-
-print("\n" + "=" * 70)
-print("LINEAR REGRESSION MODEL COMPLETE")
-print("=" * 70)
-print("\nKey Takeaways:")
-print(f"  • The model achieves R² = {test_r2:.4f} on the test set")
-print(f"  • Average prediction error: ${test_mae_original:.2f} (MAE)")
-print(f"  • Mean percentage error: {test_mape:.2f}% (MAPE)")
-print(f"  • Regularization parameter (alpha): {ridge_cv.alpha_}")
-print("\nNext steps: Compare with CART and Gradient Boosting models")

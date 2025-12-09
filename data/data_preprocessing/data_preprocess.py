@@ -13,12 +13,6 @@ df = df.dropna(subset=["seller_price"])
 # narrowed dataset down to women clothing only
 df = df[(df["product_gender_target"] != "Men") & (df["product_category"].str.contains("Clothing", case=False, na=False))]
 
-# product_gender_target will only have entries w/ "Women" and product_category will only have entries w/ "Women's clothing" so dropping these columns as they
-# will not contribute to the predictions
-#df = df.drop(["product_gender_target", "product_category"], axis=1)
-
-
-
 def clean_color(x):
     if pd.isna(x):
         return "unknown"
@@ -49,7 +43,7 @@ df["color_clean"] = df["product_color"].apply(clean_color)
 
 
 def parse_ship_time(x):
-    #convert string "1-2" days into numbers
+    #convert string 1-2 days into numbers
     if pd.isna(x):
         return np.nan
     s = str(x)
@@ -58,7 +52,7 @@ def parse_ship_time(x):
     if not nums:
         return np.nan
     nums = [float(n) for n in nums]
-    # e.g. '1-2 days' -> (1+2)/2 = 1.5
+    #1-2 days -> (1+2)/2 = 1.5
     return sum(nums) / len(nums)
 
 df["usually_ships_within_days"] = df["usually_ships_within"].apply(parse_ship_time)
@@ -89,7 +83,6 @@ cats = [
 ]
 
 feature_cols = numeric_features + cats
-# The features I did not include were ID categories, categories that were too wordy, and ones that were too related to price_usd
 
 X = df[feature_cols].copy()
 y = np.log1p(df["seller_price"])
@@ -97,17 +90,6 @@ y = np.log1p(df["seller_price"])
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=RANDOM_STATE
 )
-
-# # brand frequency-encoded, (Too many brands for one-hot, this is just the most simple solution I can think of, can be changed later)
-#calculated brand popularity after test/train split to avoid data leakage
-#removed bc VIF showed NaN
-# X_train["brand_popularity"] = X_train["brand_name"].map(
-#     X_train["brand_name"].value_counts(normalize=True)
-# )
-#
-# X_test["brand_popularity"] = X_test["brand_name"].map(
-#     X_test["brand_name"].value_counts(normalize=True)
-# )
 
 # remove outliers in price_usd for training set
 train_prices = np.expm1(y_train)
@@ -135,7 +117,7 @@ print(f"X_test missing entries count: { X_test['product_condition'].isna().sum()
 #  'Never worn, with tag' 'Good condition']
 # X_Train unique entries count: 153757
 # X_Train missing entries count: 0
-# X_test lengthe: 38440
+# X_test length: 38440
 # X_test unique entries are: ['Fair condition' 'Never worn' 'Very good condition'
 #  'Never worn, with tag' 'Good condition']
 # X_test unique entries count: 38440
