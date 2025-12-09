@@ -15,7 +15,8 @@ Run 'pip install numpy pandas scikit-learn statsmodels matplotlib seaborn'
 
 Git LFS was used for pushing the original dataset due to its large size. Ensure Git LFS is installed before cloning the repository.
 
-brew install git-lfs \n
+brew install git-lfs
+
 git lfs install
 
 
