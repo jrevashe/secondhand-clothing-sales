@@ -19,6 +19,11 @@ Git LFS was used for pushing the original dataset due to its large size. Ensure 
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+
 #install git-lfs
 brew install git-lfs
 
